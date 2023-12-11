@@ -1,0 +1,74 @@
+Get member name:
+SELECT first_name, last_name FROM Members
+WHERE username='{self.auth_service.me()}';
+
+Add health metrics log:
+INSERT INTO HealthMetrics
+VALUES ('{self.auth_service.me()}', '{date.today()}', {weight}, {bmi}, {ffmi});
+
+Add routine:
+INSERT INTO Routines
+VALUES ('{self.auth_service.me()}', '{title}', '{description}', {weekly_frequency});
+
+Log personal record:
+INSERT INTO PersonalRecords
+VALUES ('{self.auth_service.me()}', '{date.today()}', '{exercise}', {weight}, {reps});
+
+Register for class:
+INSERT INTO ClassRegistration
+VALUES ({class_id}, '{self.auth_service.me()}');
+
+Drop class:
+DELETE FROM ClassRegistration
+WHERE class_id={class_id} AND username='{self.auth_service.me()}';
+
+Get health metrics logs:
+SELECT * FROM HealthMetrics
+WHERE username='{self.auth_service.me()}'
+
+Get routines:
+SELECT * FROM Routines
+WHERE created_by='{self.auth_service.me()}'
+
+Get personal records:
+SELECT * FROM PersonalRecords
+WHERE username='{self.auth_service.me()}'
+
+Get all classes:
+SELECT * FROM Classes;
+
+Get my classes:
+SELECT * FROM Classes
+WHERE class_id IN ({class_ids});
+
+Delete routine:
+DELETE FROM Routines
+WHERE created_by='{self.auth_service.me()}' AND title='{title}';
+
+Get my personal trainers:
+SELECT trainer FROM PersonalTraining
+WHERE client='{self.auth_service.me()}'
+
+Get my personal training session logs:
+SELECT trainer, date, progress_notes FROM PersonalTrainingSession
+WHERE client='{self.auth_service.me()}'
+
+Get my outstanding bills:
+SELECT date, amount, reason FROM Billing
+WHERE client='{self.auth_service.me()}' AND paid={False};
+
+Create class:
+INSERT INTO Classes (instructor, title, description, schedule, capacity)
+VALUES ('{self.auth_service.me()}', '{title}', '{description}', '{schedule}', '{capacity}');
+
+Add personal training client:
+INSERT INTO PersonalTraining
+VALUES ('{self.auth_service.me()}', '{client}');
+
+Log personal training session:
+INSERT INTO PersonalTrainingSession
+VALUES ('{self.auth_service.me()}', '{client}', '{date.today()}', '{progress_notes}');
+
+Bill client:
+INSERT INTO Billing (client, date, amount, reason, paid)
+VALUES ('{client}', '{date.today()}', {amount}, '{reason}', {False});

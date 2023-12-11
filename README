@@ -1,0 +1,26 @@
+Video Demonstration: https://youtu.be/DWzicLWUzIE
+
+Database Setup:
+
+1. Create a new database in postgres called COMP3005 Project
+2. Run the table creation queries found in sql/table creation queries.txt
+
+Application Setup:
+
+1. Install the dependencies listed in requirements.txt using pip
+2. Modify the database credentials in db_client.py to match those for PostgreSQL on your system
+3. Run either member.py for the member application, or staff.py for the staff application
+
+SQL Directory:
+table creation queries.txt contains the full list of queries I used to create all the tables in the DB
+data manipulation.txt contains the queries used for data manipulation inside the program
+
+Program Explanation:
+
+The program is split into two modules (member.py and staff.py)
+
+member.py will allow you to login/signup as a member and access a number of feature available to members such as registering for classes, tracking your personal records, tracking your health metrics, viewing your bills, and more.
+
+staff.py will allow you to login or create a staff account. You will be able to add members as personal training clients, write personal training logs for members, and bill members.
+
+For a more detailed explanation of features and software architecture, please see the full report.

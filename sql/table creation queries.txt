@@ -1,0 +1,105 @@
+CREATE TABLE Members (
+    username    VARCHAR(255) NOT NULL,
+    first_name    VARCHAR(255)    NOT NULL,
+    last_name    VARCHAR(255)    NOT NULL,
+    password        VARCHAR(255) NOT NULL,
+    PRIMARY KEY (username)
+);
+
+CREATE TABLE Staff (
+    username    VARCHAR(255) NOT NULL,
+    first_name    VARCHAR(255)    NOT NULL,
+    last_name    VARCHAR(255)    NOT NULL,
+    password        VARCHAR(255) NOT NULL,
+    PRIMARY KEY (username)
+);
+
+CREATE TABLE HealthMetrics (
+    username    VARCHAR(255) NOT NULL,
+    date    DATE    NOT NULL,
+    weight	FLOAT,
+	bmi 	FLOAT,
+	ffmi	FLOAT,
+    PRIMARY KEY (username, date),
+	FOREIGN KEY (username)
+		REFERENCES Members(username)
+);
+
+CREATE TABLE Routines (
+	created_by	VARCHAR(255) NOT NULL,
+    title    VARCHAR(255) NOT NULL,
+    description    TEXT,
+    weekly_frequency	FLOAT,
+    PRIMARY KEY (created_by, title),
+	FOREIGN KEY (created_by)
+		REFERENCES Members(username)
+);
+
+CREATE TABLE PersonalRecords (
+	username	VARCHAR(255) NOT NULL,
+	date	DATE,
+    exercise    VARCHAR(255) NOT NULL,
+    weight    FLOAT,
+    reps	INT,
+    PRIMARY KEY (username, date, exercise),
+	FOREIGN KEY (username)
+		REFERENCES Members(username)
+);
+
+
+CREATE TABLE Classes (
+	class_id	SERIAL,
+	instructor	VARCHAR(255) NOT NULL,
+    title    VARCHAR(255) NOT NULL,
+    description	VARCHAR(255),
+	schedule	VARCHAR(255),
+	capacity	INT,
+    PRIMARY KEY (class_id),
+	FOREIGN KEY (instructor)
+		REFERENCES Staff(username)
+);
+
+	CREATE TABLE ClassRegistration (
+	class_id	SERIAL,
+	username	VARCHAR(255) NOT NULL,
+    PRIMARY KEY (class_id, username),
+	FOREIGN KEY (class_id)
+		REFERENCES Classes(class_id),
+	FOREIGN KEY (username)
+		REFERENCES Members(username)
+);
+
+CREATE TABLE PersonalTraining (
+	trainer	VARCHAR(255) NOT NULL,
+	client VARCHAR(255) NOT NULL
+    PRIMARY KEY (trainer, client),
+	FOREIGN KEY (trainer)
+		REFERENCES Staff(username),
+	FOREIGN KEY (client)
+		REFERENCES Members(username)
+);
+
+CREATE TABLE PersonalTrainingSession (
+	trainer	VARCHAR(255) NOT NULL,
+	client VARCHAR(255) NOT NULL,
+	date DATE,
+	progress_notes	TEXT,
+    PRIMARY KEY (trainer, client, date),
+	FOREIGN KEY (trainer)
+		REFERENCES Staff(username),
+	FOREIGN KEY (client)
+		REFERENCES Members(username)
+);
+
+CREATE TABLE Billing (
+	transaction_id SERIAL,
+	client	VARCHAR(255) NOT NULL,
+	date DATE,
+	amount FLOAT,
+	reason	TEXT,
+	paid BOOL,
+    PRIMARY KEY (transaction_id),
+	FOREIGN KEY (client)
+		REFERENCES Members(username)
+);
+
